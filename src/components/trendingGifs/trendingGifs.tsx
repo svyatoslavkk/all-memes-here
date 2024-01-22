@@ -1,6 +1,7 @@
 import { useGetTrendingGifsQuery } from "../../redux/api/api";
 import { Gif } from "../../types/types";
 import Card from "../card/Card";
+import StartSection from "../startSection/StartSection";
 
 export default function TrendingGifs() {
   const {
@@ -19,11 +20,11 @@ export default function TrendingGifs() {
 
   console.log("Trending GIFs", trendingGifs.data);
 
+  const name = "Trending Gifs";
+
   return (
     <section className="trending-gifs">
-      <div className="start-section">
-        <h3>Trending Gifs</h3>
-      </div>
+      <StartSection name={name} />
       <div className="cards-list">
         {trendingGifs?.data
           .slice(0, 4)

@@ -7,6 +7,15 @@
     top: 50%;
     transform: translateY(-50%);
   }
+  .message {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    background-color: $peach-color;
+  }
 }
 
 .input-text {

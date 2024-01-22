@@ -7,6 +7,9 @@
 @import './pages/Login/Login.scss';
 @import './pages/SignUp/SignUp.scss';
 @import './scss/buttons.scss';
+@import './components/loader/Loader.scss';
+@import './components/postedGifs/postedGifs.scss';
+@import './components/startSection/startSection.scss';
 
 * {
   margin: 0;
@@ -40,4 +43,19 @@ button {
 .meme-sq-img {
   width: 100%;
   height: 180px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(5, 5, 5, 0.7);
+  width: 100%;
+  height: 100vh;
+  .absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

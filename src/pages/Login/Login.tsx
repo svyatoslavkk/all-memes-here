@@ -40,26 +40,30 @@ export default function Login() {
         onSubmit={onSubmit}
       >
         <Form className="login-form">
-          <div>
+          <div className="primary-input-section">
             <Field
               className="input-text"
               type="email"
               name="email"
               placeholder="Email"
             />
-            <ErrorMessage name="email" component="div" className="error" />
+            <div>
+              <ErrorMessage name="email" component="div" className="error" />
+            </div>
           </div>
-          <div>
+          <div className="primary-input-section">
             <Field
               className="input-text"
               type="password"
               name="password"
               placeholder="Password"
             />
-            <ErrorMessage name="password" component="div" className="error" />
+            <div>
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
           </div>
           <button type="submit" className="full-width-button">
-            Login
+            <span className="mid-header">Login</span>
           </button>
         </Form>
       </Formik>

@@ -1,5 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import TrendingGifs from "../../components/trendingGifs/TrendingGifs";
+import PostedGifs from "../../components/postedGifs/PostedGifs";
 
 export default function MainPage() {
   return (
@@ -12,6 +13,7 @@ export default function MainPage() {
         </span>
       </div>
       <TrendingGifs />
+      <PostedGifs />
     </div>
   );
 }

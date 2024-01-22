@@ -7,14 +7,34 @@
     gap: 0.99rem;
     padding: 0 0.5rem 0.5rem 0.5rem;
     .text {
-      max-width: 75%;
+      max-width: 70%;
     }
-    .heart-icon {
+    .flex-content {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      max-width: 25%;
-      background-color: transparent;
+      gap: 0.5rem;
+      max-width: 30%;
+      .heart-icon {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        opacity: 0.5;
+        transition: 0.1s ease;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .download-icon {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        opacity: 0.5;
+        transition: 0.1s ease;
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 }

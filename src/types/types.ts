@@ -5,6 +5,9 @@ export type Gif = {
     fixed_height: {
       url: string;
     };
+    original: {
+      url: string;
+    }
   };
   title: string;
   type: string;

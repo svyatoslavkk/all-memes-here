@@ -14,7 +14,10 @@ export const api = createApi({
     getTrendingGifs: builder.query({
       query: () => `gifs/trending?api_key=${GIPHY_API_KEY}&limit=20`,
     }),
+    getRandomGifs: builder.query({
+      query: () => `gifs/random?api_key=${GIPHY_API_KEY}&limit=20`,
+    }),
   }),
 });
 
-export const { useGetTrendingGifsQuery } = api;
+export const { useGetTrendingGifsQuery, useGetRandomGifsQuery } = api;
