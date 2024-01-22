@@ -1,0 +1,10 @@
+@import './scss/config';
+@import './pages/MainPage/MainPage.scss';
+@import './scss/inputs.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Saira', sans-serif;
+}
