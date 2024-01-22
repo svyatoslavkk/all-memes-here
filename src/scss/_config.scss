@@ -1,2 +1,9 @@
 $creame-color: #fef5ea;
 $chocolate-color: #262020;
+$slate-color: #181e1f;
+
+@mixin flex-between-styles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

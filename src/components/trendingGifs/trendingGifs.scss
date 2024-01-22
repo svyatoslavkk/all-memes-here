@@ -1,0 +1,25 @@
+.cards-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 0.99rem;
+  background-color: $creame-color;
+  .info {
+    @include flex-between-styles;
+    gap: 0.99rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    .heart-icon {
+      background-color: transparent;
+    }
+  }
+}
+
+@media (min-width: 512px) {
+  .cards-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}

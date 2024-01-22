@@ -1,24 +1,7 @@
-import { useGetTrendingGifsQuery } from "../../redux/api/api";
-import { Gif } from "../../types/types";
 import SearchIcon from "@mui/icons-material/Search";
+import TrendingGifs from "../../components/trendingGifs/trendingGifs";
 
 export default function MainPage() {
-  const {
-    data: trendingGifs,
-    isLoading: trendingGifsLoading,
-    isError: trendingGifsError,
-  } = useGetTrendingGifsQuery({});
-
-  if (trendingGifsLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (trendingGifsError) {
-    return <p>Error fetching memes</p>;
-  }
-
-  console.log("Trending GIFs", trendingGifs.data);
-
   return (
     <div className="main-page">
       <h1>Main Page</h1>
@@ -28,9 +11,7 @@ export default function MainPage() {
           <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
         </span>
       </div>
-      {trendingGifs?.data.map((gif: Gif) => (
-        <img key={gif.id} src={gif.images.fixed_height.url} alt={gif.title} />
-      ))}
+      <TrendingGifs />
     </div>
   );
 }
