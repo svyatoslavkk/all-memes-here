@@ -1,5 +1,6 @@
 import { useGetTrendingGifsQuery } from "../../redux/api/api";
 import { Gif } from "../../types/types";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function MainPage() {
   const {
@@ -19,10 +20,13 @@ export default function MainPage() {
   console.log("Trending GIFs", trendingGifs.data);
 
   return (
-    <div className="">
+    <div className="main-page">
       <h1>Main Page</h1>
-      <div className="">
+      <div className="primary-input-section">
         <input type="text" className="input-text" placeholder="Search..." />
+        <span className="search-icon">
+          <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
+        </span>
       </div>
       {trendingGifs?.data.map((gif: Gif) => (
         <img key={gif.id} src={gif.images.fixed_height.url} alt={gif.title} />
