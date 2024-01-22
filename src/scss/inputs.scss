@@ -1,21 +1,22 @@
 .primary-input-section {
   position: relative;
-  .input-text {
-    background-color: $creame-color;
-    outline: none;
-    border: none;
-    border-radius: 0.99rem;
-    padding: 1rem;
-    width: 100%;
-    &::placeholder {
-      color: $chocolate-color; 
-    }
-  }
   .search-icon {
     position: absolute;
     display: flex;
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+
+.input-text {
+  background-color: $creame-color;
+  outline: none;
+  border: none;
+  border-radius: 0.99rem;
+  padding: 1rem;
+  width: 100%;
+  &::placeholder {
+    color: $chocolate-color; 
   }
 }

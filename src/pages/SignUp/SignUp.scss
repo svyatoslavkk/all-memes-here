@@ -1,0 +1,49 @@
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 512px;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lines {
+  display: flex;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.line-1,
+.line-2,
+.line-3 {
+  height: 5px;
+  border-radius: 5px;
+  width: 100%;
+  background-color: #aaa;
+}
+
+.gray {
+  background-color: #aaa !important;
+}
+
+.red {
+  background-color: lightcoral !important;
+}
+
+.orange {
+  background-color: lightgoldenrodyellow !important;
+}
+
+.green {
+  background-color: lightgreen !important;
+}

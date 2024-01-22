@@ -4,12 +4,23 @@
 @import './components/trendingGifs/trendingGifs.scss';
 @import './scss/texts.scss';
 @import './components/card/Card.scss';
+@import './pages/Login/Login.scss';
+@import './pages/SignUp/SignUp.scss';
+@import './scss/buttons.scss';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Saira', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(191, 191, 191, 0.7);
+  border-radius: 8px;
 }
 
 body {

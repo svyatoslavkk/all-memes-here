@@ -10,3 +10,8 @@ export type Gif = {
   type: string;
   trending_datetime: string;
 };
+
+export type FormValues = {
+  email: string;
+  password: string;
+};

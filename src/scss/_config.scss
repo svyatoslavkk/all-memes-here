@@ -1,7 +1,17 @@
 $creame-color: #fef5ea;
 $lavanda-color: #ede0d4;
+$peach-color: #e6ccb2;
+$sand-color: #ddb892;
 $chocolate-color: #262020;
 $slate-color: #181e1f;
+
+@mixin default-container-styles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+}
 
 @mixin flex-between-styles {
   display: flex;
