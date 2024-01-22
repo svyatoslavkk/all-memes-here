@@ -3,12 +3,17 @@
 @import './scss/inputs.scss';
 @import './components/trendingGifs/trendingGifs.scss';
 @import './scss/texts.scss';
+@import './components/card/Card.scss';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Saira', sans-serif;
+}
+
+body {
+  background-color: $lavanda-color;
 }
 
 img {

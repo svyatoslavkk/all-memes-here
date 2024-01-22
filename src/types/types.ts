@@ -1,4 +1,5 @@
 export type Gif = {
+  key: string;
   id: string;
   images: {
     fixed_height: {

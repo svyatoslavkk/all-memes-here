@@ -1,5 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import TrendingGifs from "../../components/trendingGifs/trendingGifs";
+import TrendingGifs from "../../components/trendingGifs/TrendingGifs";
 
 export default function MainPage() {
   return (
