@@ -10,6 +10,8 @@
 @import './components/loader/Loader.scss';
 @import './components/postedGifs/postedGifs.scss';
 @import './components/startSection/startSection.scss';
+@import './pages/Search/search.scss';
+@import './components/menuBar/menuBar.scss';
 
 * {
   margin: 0;
@@ -19,7 +21,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgba(191, 191, 191, 0.7);

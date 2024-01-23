@@ -2,19 +2,35 @@ $creame-color: #fef5ea;
 $lavanda-color: #ede0d4;
 $peach-color: #e6ccb2;
 $sand-color: #ddb892;
+$sienna-color: #7f5539;
+$brown-color: #9c6644;
+$dark-gray: #A9A9A9;
 $chocolate-color: #262020;
 $slate-color: #181e1f;
 
 @mixin default-container-styles {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.99rem;
   padding: 1rem;
   width: 100%;
+}
+
+@mixin column-styles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 @mixin flex-between-styles {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin column-center-styles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

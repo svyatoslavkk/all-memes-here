@@ -6,15 +6,19 @@ import { app, database } from '../../firebase/firebaseConfig';
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  updateProfile
 } from 'firebase/auth';
 import Loader from "../../components/loader/Loader";
 import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function SignUp() {
   const auth = getAuth(app);
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const collectionRef = collection(database, 'Users Data');
 
@@ -26,12 +30,28 @@ export default function SignUp() {
       const currentUser = auth.currentUser;
 
       if (currentUser) {
+        let pictureUrl = null;
+        
+        if (avatar) {
+          const storage = getStorage(app);
+          const storageRef = ref(storage, 'avatars/' + currentUser?.uid + '.jpg');
+          await uploadBytes(storageRef, avatar);
+          pictureUrl = await getDownloadURL(storageRef);
+        }
+
+        await updateProfile(currentUser, {
+          displayName: userName,
+          photoURL: pictureUrl,
+        });
+
         console.log(response.user);
         sessionStorage.setItem('Token', response.user?.accessToken);
 
         const docRef = await addDoc(collectionRef, {
           uid: currentUser.uid,
+          userName: userName,
           email: currentUser.email,
+          ...(avatar && { avatar: pictureUrl }),
         });
 
         const docId = docRef.id;
@@ -49,6 +69,10 @@ export default function SignUp() {
     }
   };
 
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserName(event.target.value);
+  };
+
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -57,10 +81,37 @@ export default function SignUp() {
     setPassword(event.target.value);
   };
 
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+  
+    if (file) {
+      setAvatar(file);
+    }
+  };
+
   return (
     <div className="sign-up">
       <h2 style={{ textAlign: "center" }}>SignUp</h2>
       <form className="sign-up-form" onSubmit={handleRegistration}>
+        <div className="primary-input-section">
+          <label htmlFor="avatarInput" className="avatar-label">
+            Choose Avatar
+          </label>
+          <input
+              type="file"
+              id="avatarInput"
+            accept="image/*"
+            onChange={handleAvatarChange}
+          />
+        </div>
+        <div className="primary-input-section">
+          <input
+            className="input-text"
+            type="text"
+            placeholder="Username"
+            onChange={handleUsernameChange}
+          />
+        </div>
         <div className="primary-input-section">
           <input
             className="input-text"
