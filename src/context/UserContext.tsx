@@ -10,6 +10,8 @@ const UserContext = createContext<{
   user: any;
   fireData: any[];
   fetchData: () => Promise<void>;
+  fetchPosts: any[];
+  getPostsData: () => Promise<void>;
 } | undefined>(undefined);
 
 export const UserProvider: React.FC<any> = ({ children }) => {
@@ -32,7 +34,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
     try {
       const postsDocSnapshot = await getDocs(postCollectionRef);
       const postsDoc = postsDocSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      const postsArray = postsDoc[0].posts;
+      const postsArray = postsDoc[0].posts.reverse();
       setFetchPosts(postsArray);
     } catch (error) {
       console.error('Error getting posts document:', error);
@@ -43,6 +45,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
     let token = sessionStorage.getItem('Token');
     if (token) {
       fetchData();
+      getPostsData();
 
       const auth = getAuth(app);
       const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -58,7 +61,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, fireData, fetchData, fetchPosts }}>
+    <UserContext.Provider value={{ user, fireData, fetchData, fetchPosts, getPostsData }}>
       {children}
     </UserContext.Provider>
   );

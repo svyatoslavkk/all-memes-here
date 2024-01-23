@@ -14,10 +14,10 @@ import PostCard from "../../components/PostCard/PostCard";
 export default function Profile() {
   const [activeButton, setActiveButton] = useState('Favorites');
   const [users, setUsers] = useState<User[]>([]);
-  const [fetchPosts, setFetchPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { user, fireData } = useUserContext();
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const { user, fireData, fetchPosts, getPostsData } = useUserContext();
   const collectionRef = collection(database, 'Users Data');
   const postCollectionRef = collection(database, 'Posts Data');
   const postsDocRef = doc(postCollectionRef, "uIBTpBRYP7C0kaiTFtyH");
@@ -34,17 +34,6 @@ export default function Profile() {
     }
   };
 
-  const getPostsData = async () => {
-    try {
-      const postsDocSnapshot = await getDocs(postCollectionRef);
-      const postsDoc = postsDocSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      const postsArray = postsDoc[0].posts;
-      setFetchPosts(postsArray);
-    } catch (error) {
-      console.error('Error getting posts document:', error);
-    }
-  };
-
   const myData = users
   .filter((data) => data.uid === user?.uid)[0];
   const userDocRef = myData ? doc(collectionRef, myData.docId) : null;
@@ -56,6 +45,10 @@ export default function Profile() {
 
   const handleDownload = () => {
     saveAs(gif.images.original.url, 'downloaded.gif');
+  };
+
+  const handleCreatePostClick = () => {
+    setShowCreatePost(true);
   };
 
   const handleAddToFavorites = async () => {
@@ -182,12 +175,14 @@ export default function Profile() {
           )}
         </section>
       </div>
-      <MenuBar />
-      {/* <ToCreatePost
-        myUsername={myUsername ?? undefined}
-        myAvatar={myAvatar ?? undefined}
-        myUid={myUid ?? undefined}
-      /> */}
+      <MenuBar handleCreatePostClick={handleCreatePostClick} />
+      {showCreatePost && (
+        <ToCreatePost
+          myUsername={myUsername ?? undefined}
+          myAvatar={myAvatar ?? undefined}
+          myUid={myUid ?? undefined}
+        />
+      )}
     </section>
   )
 }

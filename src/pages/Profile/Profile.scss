@@ -2,6 +2,7 @@
   @include default-container-styles;
   justify-content: center;
   align-items: center;
+  padding: 1rem 1rem 4rem 1rem;
 }
 
 .profile-main-info,
@@ -59,4 +60,11 @@
   display: flex;
   gap: 0.25rem;
   align-items: center;
+  .dot {
+    display: flex;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    background-color: $chocolate-color;
+  }
 }

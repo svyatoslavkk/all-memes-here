@@ -1,30 +1,22 @@
 import StartSection from "../startSection/StartSection"
-import { useGetRandomGifsQuery } from "../../redux/api/api"
-import Card from "../card/Card";
-import { Gif } from "../../types/types";
+import { Post } from "../../types/types";
+import PostCard from "../PostCard/PostCard";
+import { useUserContext } from "../../context/UserContext";
 
 export default function PostedGifs() {
-  const {
-    data: randomGifs,
-    isLoading: randomGifsLoading,
-    isError: randomGifsError,
-  } = useGetRandomGifsQuery({});
-
-  if (randomGifsLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (randomGifsError) {
-    return <p>Error fetching memes</p>;
-  }
+  const { fetchPosts } = useUserContext();
+  const reversed = fetchPosts.reverse();
+  console.log("PostedGifs", reversed);
 
   const name = "Posted Gifs";
 
   return (
     <section className="posted-gifs">
-      <StartSection name={name} />
+    <StartSection name={name} />
       <div className="cards-list">
-        {randomGifs?.data && <Card gif={randomGifs.data as Gif} key={randomGifs.data.id} />}
+        {fetchPosts && fetchPosts.map((post: Post) => (
+          <PostCard post={post} />
+        ))}
       </div>
     </section>
   )

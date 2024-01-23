@@ -6,6 +6,15 @@
   height: 100vh;
   background-color: rgba(5, 5, 5, 0.5);
   z-index: 1000;
+  .to-create-post-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(173, 173, 173, 0.7);
+    z-index: 900;
+  }
 }
 
 .editor-file {
@@ -19,11 +28,25 @@
   transform: translate(-50%, -50%);
   background-color: $creame-color;
   width: 90%;
+  height: auto;
   border-radius: 0.5rem;
-  padding: 0.25rem;
+  overflow: hidden;
+  z-index: 800;
+  .overlay-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 950;
+  }
+}
+
+.editor-content {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 0.25rem;
 }
 
 .editor-header {

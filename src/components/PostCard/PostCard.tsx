@@ -7,6 +7,21 @@ interface PostCardProps {
 }
 
 export default function PostCard({post}: PostCardProps) {
+  const currDate = new Date();
+  const postDate = new Date(post.timestamp);
+  const timeDifference = currDate - postDate;
+  const secondsDifference = Math.floor(timeDifference / 1000);
+
+  const formatTimeLeft = (number: number) => {
+    if (number >= 3600) {
+      return `${Math.floor(number / 3600)}h`;
+    } else if (number < 3600 && number >= 60) {
+      return `${Math.floor(number / 60)}m`;
+    } else if (number < 60) {
+      return `${Math.floor(number)}s`;
+    }
+  };
+
   return (
     <div key={post.caption} className="card">
       <img
@@ -20,6 +35,8 @@ export default function PostCard({post}: PostCardProps) {
           <div className="test4">
             <img src={post.avatar} className="mini-circle-img" alt={post.caption} />
             <p className="small-text">{post.userName}</p>
+            <span className="dot"></span>
+            <p className="small-text">{formatTimeLeft(secondsDifference)}</p>
           </div>
         </div>
         <div className="flex-content">
