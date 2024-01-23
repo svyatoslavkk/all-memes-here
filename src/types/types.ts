@@ -14,6 +14,13 @@ export type Gif = {
   trending_datetime: string;
 };
 
+export type FavGif = {
+  id: string;
+  url: string;
+  title: string;
+  originalUrl: string;
+}
+
 export type FormValues = {
   email: string;
   password: string;
@@ -28,4 +35,13 @@ export type User = {
   uid: string;
   userName: string;
   favoriteGifs: []; 
+}
+
+export type Post = {
+  avatar: string;
+  caption: string;
+  gifURL: string;
+  timestamp: string;
+  uid: string;
+  userName: string;
 }

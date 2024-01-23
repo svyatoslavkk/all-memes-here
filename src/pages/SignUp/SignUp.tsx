@@ -53,6 +53,7 @@ export default function SignUp() {
           userName: userName,
           fullName: fullName,
           email: currentUser.email,
+          favoriteGifs: [],
           ...(avatar && { avatar: pictureUrl }),
         });
 

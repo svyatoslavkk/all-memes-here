@@ -1,16 +1,62 @@
 import { useState } from 'react';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import { app, database } from '../../firebase/firebaseConfig';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile
+} from 'firebase/auth';
+import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface ToCreatePost {
   myUsername?: string;
   myAvatar?: string;
+  myUid?: string;
 }
 
-export default function ToCreatePost({myUsername, myAvatar}: ToCreatePost) {
+export default function ToCreatePost({myUsername, myAvatar, myUid}: ToCreatePost) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [caption, setCaption] = useState('');
+  const storage = getStorage(app);
+  const collectionRef = collection(database, 'Posts Data');
+  const userDocRef = doc(collectionRef, "uIBTpBRYP7C0kaiTFtyH");
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+  };
+
+  const handlePostSubmit = async () => {
+    if (!selectedFile || !caption) {
+      return;
+    }
+    if (userDocRef) {
+      try {
+        const storageRef = ref(storage, `posts/${myUid}/${selectedFile.name}`);
+        await uploadBytes(storageRef, selectedFile);
+  
+        const downloadURL = await getDownloadURL(storageRef);
+  
+        const newPost = {
+          gifURL: downloadURL,
+          caption: caption,
+          timestamp: new Date().toISOString(),
+          uid: myUid,
+          userName: myUsername,
+          avatar: myAvatar,
+        };
+  
+        await updateDoc(userDocRef, {
+          posts: arrayUnion(newPost),
+        });
+  
+        setSelectedFile(null);
+        setCaption('');
+      } catch (error) {
+        console.error('Error creating post:', error);
+      }
+    }
   };
 
   return (
@@ -25,9 +71,8 @@ export default function ToCreatePost({myUsername, myAvatar}: ToCreatePost) {
           </div>
         )}
         <label htmlFor="file" className="editor-footer"> 
-          <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path><path d="M18.153 6h-.009v5.342H23.5v-.002z"></path></g></svg> 
+          <InsertDriveFileIcon />
           <p>Not selected file</p> 
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z" stroke="#000000" stroke-width="2"></path> <path d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round"></path> <path d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z" stroke="#000000" stroke-width="2"></path> </g></svg>
         </label> 
         <input 
           className="editor-file" 
@@ -36,12 +81,18 @@ export default function ToCreatePost({myUsername, myAvatar}: ToCreatePost) {
           onChange={handleFileChange}
         /> 
         <div className="editor-input">
-          <input className="input-text" placeholder="Name your post" />
+          <input 
+            className="input-text" 
+            placeholder="Name your post" 
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+          />
         </div>
         <div className="flex-content">
           <img src={myAvatar} className="small-circle-img" alt="Profile Image" />
           <span className="small-header">{myUsername}</span>
         </div>
+        <button onClick={handlePostSubmit}>Submit Post</button>
       </div>
     </div>
   )
