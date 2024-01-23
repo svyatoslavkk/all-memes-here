@@ -1,14 +1,11 @@
-import SearchIcon from "@mui/icons-material/Search";
-import TrendingGifs from "../../components/trendingGifs/TrendingGifs";
-import PostedGifs from "../../components/postedGifs/PostedGifs";
-import MenuBar from "../../components/menuBar/MenuBar";
+import MenuBar from "../../components/menuBar/MenuBar"
+import { useUserContext } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import { collection, getDocs, onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
 import { database } from "../../firebase/firebaseConfig";
 import { User } from "../../types/types";
-import { useUserContext } from "../../context/UserContext";
 
-export default function MainPage() {
+export default function Profile() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const collectionRef = collection(database, 'Users Data');
@@ -37,40 +34,34 @@ export default function MainPage() {
   const fakeImg = 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d9359ae0-065b-4756-bfed-02ad0e0f73f8/dg1t181-2b042eec-17cc-4d17-841b-31c194c091e0.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q5MzU5YWUwLTA2NWItNDc1Ni1iZmVkLTAyYWQwZTBmNzNmOFwvZGcxdDE4MS0yYjA0MmVlYy0xN2NjLTRkMTctODQxYi0zMWMxOTRjMDkxZTAuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hvmrnKtJN42DTXfSG4w82Xz1Y6tWofYGL3LLccckYHY';
 
   return (
-    <div className="main-page">
-      <div className="flex-between">
-        <div className="flex-content">
-          {fireData && fireData
-          .filter((data: User) => data.uid === user?.uid)
-          .map((data: User) => (
-            <div className="img-section">
-              <img src={data.avatar ? data.avatar : fakeImg} className="circle-img" alt="" />
-              <span className="online-sign"></span>
-            </div>
-          ))}
-          <div className="text3">
+    <section className="profile">
+      <h2>Profile</h2>
+      <div>
+        {fireData && fireData
+        .filter((data: User) => data.uid === user?.uid)
+        .map((data: User) => (
+          <img src={data.avatar ? data.avatar : fakeImg} className="big-circle-img" alt="" />
+        ))}
+        <div className="text3">
           {fireData && fireData
             .filter((data: User) => data.uid === user?.uid)
             .map((data: User) => (
-              <h3 className="mid-header">{data.fullName ? data.fullName : "NONE"}</h3>
+              <h3 className="big-header">{data.fullName ? data.fullName : "NONE"}</h3>
             ))}
-            {fireData && fireData
+          {fireData && fireData
             .filter((data: User) => data.uid === user?.uid)
             .map((data: User) => (
               <span className="mid-text">@{data.userName ? data.userName : 'NONE'}</span>
             ))}
-          </div>
         </div>
+        <div className="profile-buttons">
+          <button className="favorite-section-button">
+            <h3 className="mid-header">Favorites</h3>
+          </button>
+        </div>
+        
       </div>
-      {/* <div className="primary-input-section">
-        <input type="text" className="input-text" placeholder="Search..." />
-        <span className="search-icon">
-          <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
-        </span>
-      </div> */}
-      <TrendingGifs />
-      <PostedGifs />
       <MenuBar />
-    </div>
-  );
+    </section>
+  )
 }

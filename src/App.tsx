@@ -5,17 +5,22 @@ import MainPage from "./pages/MainPage/MainPage";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Search from "./pages/Search/Search";
+import Profile from "./pages/Profile/Profile";
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </UserProvider>
       </BrowserRouter>
     </Provider>
   );

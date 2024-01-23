@@ -22,6 +22,12 @@ $slate-color: #181e1f;
   gap: 0.5rem;
 }
 
+@mixin row-styles {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
 @mixin flex-between-styles {
   display: flex;
   align-items: center;

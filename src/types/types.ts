@@ -18,3 +18,13 @@ export type FormValues = {
   email: string;
   password: string;
 };
+
+export type User = {
+  id: string;
+  avatar: string;
+  docId: string;
+  fullName: string;
+  email: string;
+  uid: string;
+  userName: string;
+}

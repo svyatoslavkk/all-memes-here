@@ -12,12 +12,17 @@
 @import './components/startSection/startSection.scss';
 @import './pages/Search/search.scss';
 @import './components/menuBar/menuBar.scss';
+@import './pages/Profile/Profile.scss';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Saira', sans-serif;
+}
+
+h1, h2, h3, h4, h5 ,h6 {
+  margin: 0;
 }
 
 ::-webkit-scrollbar {
@@ -47,6 +52,18 @@ button {
   height: 180px;
 }
 
+.circle-img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.big-circle-img {
+  border-radius: 50%;
+  width: 96px;
+  height: 96px;
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -60,4 +77,9 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.flex-content {
+  @include row-styles;
+  align-items: center;
 }

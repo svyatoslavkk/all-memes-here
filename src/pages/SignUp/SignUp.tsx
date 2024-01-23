@@ -16,6 +16,7 @@ export default function SignUp() {
   const auth = getAuth(app);
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [avatar, setAvatar] = useState<File | null>(null);
@@ -50,6 +51,7 @@ export default function SignUp() {
         const docRef = await addDoc(collectionRef, {
           uid: currentUser.uid,
           userName: userName,
+          fullName: fullName,
           email: currentUser.email,
           ...(avatar && { avatar: pictureUrl }),
         });
@@ -67,6 +69,10 @@ export default function SignUp() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFullnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFullName(event.target.value);
   };
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +108,14 @@ export default function SignUp() {
               id="avatarInput"
             accept="image/*"
             onChange={handleAvatarChange}
+          />
+        </div>
+        <div className="primary-input-section">
+          <input
+            className="input-text"
+            type="text"
+            placeholder="Full Name"
+            onChange={handleFullnameChange}
           />
         </div>
         <div className="primary-input-section">
