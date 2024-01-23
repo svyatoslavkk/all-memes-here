@@ -18,8 +18,6 @@ export default function PostedGifs() {
     return <p>Error fetching memes</p>;
   }
 
-  console.log("randomGifs", randomGifs.data);
-
   const name = "Posted Gifs";
 
   return (

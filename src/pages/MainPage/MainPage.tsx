@@ -12,7 +12,7 @@ export default function MainPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const collectionRef = collection(database, 'Users Data');
-  const { user, fireData, fetchData } = useUserContext();
+  const { user, fireData } = useUserContext();
 
   const getUsers = async () => {
     try {
@@ -25,10 +25,6 @@ export default function MainPage() {
       setLoading(false);
     }
   };
-
-  const myData = users
-  .filter((data) => data.uid === user?.uid)[0];
-  console.log("myData", myData);
 
   useEffect(() => {
     getUsers();
@@ -43,7 +39,7 @@ export default function MainPage() {
           {fireData && fireData
           .filter((data: User) => data.uid === user?.uid)
           .map((data: User) => (
-            <div className="img-section">
+            <div key={data.uid} className="img-section">
               <img src={data.avatar ? data.avatar : fakeImg} className="circle-img" alt="" />
               <span className="online-sign"></span>
             </div>
@@ -52,22 +48,16 @@ export default function MainPage() {
           {fireData && fireData
             .filter((data: User) => data.uid === user?.uid)
             .map((data: User) => (
-              <h3 className="mid-header">{data.fullName ? data.fullName : "NONE"}</h3>
+              <h3 key={data.uid} className="mid-header">{data.fullName ? data.fullName : "NONE"}</h3>
             ))}
             {fireData && fireData
             .filter((data: User) => data.uid === user?.uid)
             .map((data: User) => (
-              <span className="mid-text">@{data.userName ? data.userName : 'NONE'}</span>
+              <span key={data.uid} className="mid-text">@{data.userName ? data.userName : 'NONE'}</span>
             ))}
           </div>
         </div>
       </div>
-      {/* <div className="primary-input-section">
-        <input type="text" className="input-text" placeholder="Search..." />
-        <span className="search-icon">
-          <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
-        </span>
-      </div> */}
       <TrendingGifs />
       <PostedGifs />
       <MenuBar />

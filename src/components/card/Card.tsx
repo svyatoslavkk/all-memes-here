@@ -5,7 +5,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { saveAs } from 'file-saver';
 import { useState, useEffect } from 'react';
 import { useUserContext } from "../../context/UserContext";
-import { doc, updateDoc, arrayUnion, arrayRemove, collection, onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove, collection, getDocs } from 'firebase/firestore';
 import { database } from "../../firebase/firebaseConfig";
 import { User } from "../../types/types";
 
@@ -15,48 +15,58 @@ interface CardProps {
 
 export default function Card({ gif }: CardProps) {
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const collectionRef = collection(database, 'Users Data');
-  const { user, fireData, fetchData } = useUserContext();
+  const { user } = useUserContext();
+
+  const getUsers = async () => {
+    try {
+      const snapshot = await getDocs(collectionRef);
+      const userList = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as User));
+      setUsers(userList);
+    } catch (error) {
+      console.error('Error getting users:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const myData = users
   .filter((data) => data.uid === user?.uid)[0];
-  const userDocRef = doc(database, 'Users Data', myData?.docId);
+  const userDocRef = myData ? doc(collectionRef, myData.docId) : null;
 
   const handleDownload = () => {
     saveAs(gif.images.original.url, 'downloaded.gif');
   };
 
   const handleAddToFavorites = async () => {
-    const favoriteGifData = {
-      id: gif.id,
-      url: gif.images.fixed_height.url,
-      title: gif.title,
-      originalUrl: gif.images.original.url
-    };
-    try {
-      if (isFavorite) {
-        await updateDoc(userDocRef, {
-          favoriteGifs: arrayRemove(favoriteGifData)
-        });
-      } else {
-        await updateDoc(userDocRef, {
-          favoriteGifs: arrayUnion(favoriteGifData)
-        });
+    if (userDocRef) {
+      const favoriteGifData = {
+        id: gif.id,
+        url: gif.images.fixed_height.url,
+        title: gif.title,
+        originalUrl: gif.images.original.url
+      };
+      try {
+        if (isFavorite) {
+          await updateDoc(userDocRef, {
+            favoriteGifs: arrayRemove(favoriteGifData)
+          });
+        } else {
+          await updateDoc(userDocRef, {
+            favoriteGifs: arrayUnion(favoriteGifData)
+          });
+        }
+        setIsFavorite(!isFavorite);
+      } catch (error) {
+        console.error('Error updating favorites:', error);
       }
-      setIsFavorite(!isFavorite);
-    } catch (error) {
-      console.error('Error updating favorites:', error);
     }
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collectionRef, (snapshot: QuerySnapshot<DocumentData>) => {
-      const userList = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as User));
-      setUsers(userList);
-    });
-  
-    return () => unsubscribe();
+    getUsers();
   }, []);
 
   return (
@@ -77,7 +87,7 @@ export default function Card({ gif }: CardProps) {
           </button>
           {isFavorite ? (
             <button className="heart-icon" onClick={handleAddToFavorites}>
-              <FavoriteIcon />
+              <FavoriteIcon sx={{color: '#ff2222'}} />
             </button>
           ): (
             <button className="heart-icon" onClick={handleAddToFavorites}>
