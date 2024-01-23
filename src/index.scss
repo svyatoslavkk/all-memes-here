@@ -13,6 +13,7 @@
 @import './pages/Search/search.scss';
 @import './components/menuBar/menuBar.scss';
 @import './pages/Profile/Profile.scss';
+@import './components/toCreatePost/toCreatePost.scss';
 
 * {
   margin: 0;
@@ -50,6 +51,12 @@ button {
 .meme-sq-img {
   width: 100%;
   height: 180px;
+}
+
+.small-circle-img {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
 }
 
 .circle-img {

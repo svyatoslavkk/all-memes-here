@@ -1,18 +1,56 @@
 .profile {
   @include default-container-styles;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-main-info,
+.text3 {
+  @include column-center-styles;
 }
 
 .favorite-section-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   background-color: $peach-color;
   padding: 0.5rem;
   width: 100%;
   border-radius: 0.5rem;
+  opacity: 0.5;
+}
+.favorite-section-button.active {
+  opacity: 1;
+}
+.circle-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  background-color: $sand-color;
+  border-radius: 50%;
 }
 
 .profile-buttons {
   display: flex;
-  width: 100%;
+  gap: 0.25rem;
   border-radius: 0.5rem;
   padding: 0.25rem;
   background-color: $sand-color;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.profile-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }

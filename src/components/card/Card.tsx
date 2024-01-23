@@ -1,7 +1,7 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Gif } from "../../types/types";
 import DownloadIcon from '@mui/icons-material/Download';
+import { Gif } from "../../types/types";
 import { saveAs } from 'file-saver';
 import { useState, useEffect } from 'react';
 import { useUserContext } from "../../context/UserContext";

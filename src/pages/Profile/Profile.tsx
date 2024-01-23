@@ -1,15 +1,22 @@
 import MenuBar from "../../components/menuBar/MenuBar"
 import { useUserContext } from "../../context/UserContext";
 import { useEffect, useState } from "react";
-import { collection, getDocs, onSnapshot, QuerySnapshot, DocumentData } from 'firebase/firestore';
+import { doc, collection, getDocs, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { database } from "../../firebase/firebaseConfig";
 import { User } from "../../types/types";
+import { saveAs } from 'file-saver';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import DownloadIcon from '@mui/icons-material/Download';
+import ToCreatePost from "../../components/toCreatePost/ToCreatePost";
 
 export default function Profile() {
+  const [activeButton, setActiveButton] = useState('Favorites');
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const collectionRef = collection(database, 'Users Data');
-  const { user, fireData, fetchData } = useUserContext();
+  const { user, fireData } = useUserContext();
 
   const getUsers = async () => {
     try {
@@ -25,7 +32,38 @@ export default function Profile() {
 
   const myData = users
   .filter((data) => data.uid === user?.uid)[0];
-  console.log("myData", myData);
+  const userDocRef = myData ? doc(collectionRef, myData.docId) : null;
+  const myUsername = myData ? myData.userName : null;
+  const myAvatar = myData ? myData.avatar : null;
+
+  const handleDownload = () => {
+    saveAs(gif.images.original.url, 'downloaded.gif');
+  };
+
+  const handleAddToFavorites = async () => {
+    if (userDocRef) {
+      const favoriteGifData = {
+        id: gif.id,
+        url: gif.images.fixed_height.url,
+        title: gif.title,
+        originalUrl: gif.images.original.url
+      };
+      try {
+        if (isFavorite) {
+          await updateDoc(userDocRef, {
+            favoriteGifs: arrayRemove(favoriteGifData)
+          });
+        } else {
+          await updateDoc(userDocRef, {
+            favoriteGifs: arrayUnion(favoriteGifData)
+          });
+        }
+        setIsFavorite(!isFavorite);
+      } catch (error) {
+        console.error('Error updating favorites:', error);
+      }
+    }
+  };
 
   useEffect(() => {
     getUsers();
@@ -35,33 +73,94 @@ export default function Profile() {
 
   return (
     <section className="profile">
-      <h2>Profile</h2>
-      <div>
-        {fireData && fireData
-        .filter((data: User) => data.uid === user?.uid)
-        .map((data: User) => (
-          <img src={data.avatar ? data.avatar : fakeImg} className="big-circle-img" alt="" />
-        ))}
-        <div className="text3">
+      <div className="profile-content">
+        <section className="profile-main-info">
           {fireData && fireData
-            .filter((data: User) => data.uid === user?.uid)
-            .map((data: User) => (
-              <h3 className="big-header">{data.fullName ? data.fullName : "NONE"}</h3>
-            ))}
-          {fireData && fireData
-            .filter((data: User) => data.uid === user?.uid)
-            .map((data: User) => (
-              <span className="mid-text">@{data.userName ? data.userName : 'NONE'}</span>
-            ))}
-        </div>
-        <div className="profile-buttons">
-          <button className="favorite-section-button">
-            <h3 className="mid-header">Favorites</h3>
-          </button>
-        </div>
-        
+          .filter((data: User) => data.uid === user?.uid)
+          .map((data: User) => (
+            <img src={data.avatar ? data.avatar : fakeImg} className="big-circle-img" alt="" />
+          ))}
+          <div className="text3">
+            {fireData && fireData
+              .filter((data: User) => data.uid === user?.uid)
+              .map((data: User) => (
+                <h3 className="big-header">{data.fullName ? data.fullName : "NONE"}</h3>
+              ))}
+            {fireData && fireData
+              .filter((data: User) => data.uid === user?.uid)
+              .map((data: User) => (
+                <span className="mid-text">@{data.userName ? data.userName : 'NONE'}</span>
+              ))}
+          </div>
+        </section>
+        <section className="profile-posts">
+          <div className="profile-buttons">
+            <button 
+              className={`favorite-section-button ${activeButton === 'Posted' ? 'active' : ''}`}
+              onClick={() => setActiveButton('Posted')}
+            >
+              <h3 className="mid-header">Posted</h3>
+            </button>
+            <button
+              className={`favorite-section-button ${activeButton === 'Favorites' ? 'active' : ''}`}
+              onClick={() => setActiveButton('Favorites')}
+            >
+              <h3 className="mid-header">Favorites</h3>
+              {myData && (
+                <span className="circle-number">
+                  <span className="small-header">{myData.favoriteGifs.length}</span>
+                </span>
+              )}
+            </button>
+          </div>
+          {activeButton === 'Posted' && (
+            <div className="cards-list">
+              NONE
+            </div>
+          )}
+          {activeButton === 'Favorites' && (
+            <div className="cards-list">
+              {myData && myData.favoriteGifs.map((gif) => (
+                <div key={gif.id} className="card">
+                  <img
+                    src={gif.url}
+                    className="meme-sq-img"
+                    alt={gif.title}
+                  />
+                  <div className="info">
+                    <div className="text">
+                      <p className="small-header no-wrap">{gif.title}</p>
+                      <p className="small-text">GIF</p>
+                    </div>
+                    <div className="flex-content">
+                      <button 
+                        className="download-icon" 
+                        onClick={() => {saveAs(gif.url, 'downloaded.gif');}}
+                      >
+                        <DownloadIcon />
+                      </button>
+                      {isFavorite ? (
+                        <button className="heart-icon" onClick={handleAddToFavorites}>
+                          <FavoriteIcon sx={{color: '#ff2222'}} />
+                        </button>
+                      ): (
+                        <button className="heart-icon" onClick={handleAddToFavorites}>
+                          <FavoriteBorderIcon />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
       <MenuBar />
+      <ToCreatePost
+        myUsername={myUsername ?? undefined}
+        myAvatar={myAvatar ?? undefined}
+      />
     </section>
   )
 }
