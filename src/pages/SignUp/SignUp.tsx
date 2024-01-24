@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { Formik } from "formik";
 // import { FormValues } from "../../types/types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { app, database } from "../../firebase/firebaseConfig";
 import {
   getAuth,
@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import Loader from "../../components/loader/Loader";
+import GoogleIcon from "@mui/icons-material/Google";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -106,13 +107,11 @@ export default function SignUp() {
 
   return (
     <div className="sign-up">
-      <h2 style={{ textAlign: "center" }}>SignUp</h2>
+      <h2 style={{ textAlign: "center" }}>Welcome to our App!</h2>
       <form className="sign-up-form" onSubmit={handleRegistration}>
         <div className="primary-input-section">
-          <label htmlFor="avatarInput" className="avatar-label">
-            Choose Avatar
-          </label>
           <input
+            className="input-text"
             type="file"
             id="avatarInput"
             accept="image/*"
@@ -152,9 +151,32 @@ export default function SignUp() {
           />
         </div>
         <button type="submit" className="full-width-button">
-          <span className="mid-header">Submit</span>
+          <span className="mid-header">Sign Up</span>
         </button>
+        <p className="mid-text">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            style={{
+              color: "#9c6644",
+              fontWeight: 600,
+              textDecoration: "none",
+            }}
+          >
+            Login
+          </Link>
+        </p>
       </form>
+      <span className="dividing">
+        <span className="text">
+          <span className="mid-header">or continue with</span>
+        </span>
+      </span>
+      <div className="flex-content">
+        <button className="shadow-button">
+          <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
+        </button>
+      </div>
       {/* <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values: FormValues) => {

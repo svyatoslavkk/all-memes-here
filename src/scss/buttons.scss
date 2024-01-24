@@ -24,3 +24,23 @@
   border-radius: 50%;
   background-color: $peach-color;
 }
+
+.small-circle-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: $peach-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shadow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 20px $sand-color;
+  background-color: transparent;
+}
