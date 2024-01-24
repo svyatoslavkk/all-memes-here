@@ -1,6 +1,8 @@
 .search {
   @include default-container-styles;
   padding: 1rem 1rem 4rem 1rem;
+  justify-content: space-between;
+  height: 100vh;
 }
 
 .test-loader {

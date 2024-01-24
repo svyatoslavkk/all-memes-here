@@ -1,6 +1,7 @@
 import { Post } from "../../types/types";
 import DownloadIcon from '@mui/icons-material/Download';
 import { saveAs } from 'file-saver';
+import { formatTimeLeft } from "../../utils/formatTimeLeft";
 
 interface PostCardProps {
   post: Post;
@@ -11,16 +12,6 @@ export default function PostCard({post}: PostCardProps) {
   const postDate = new Date(post.timestamp);
   const timeDifference = currDate - postDate;
   const secondsDifference = Math.floor(timeDifference / 1000);
-
-  const formatTimeLeft = (number: number) => {
-    if (number >= 3600) {
-      return `${Math.floor(number / 3600)}h`;
-    } else if (number < 3600 && number >= 60) {
-      return `${Math.floor(number / 60)}m`;
-    } else if (number < 60) {
-      return `${Math.floor(number)}s`;
-    }
-  };
 
   return (
     <div key={post.caption} className="card">

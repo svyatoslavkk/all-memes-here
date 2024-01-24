@@ -16,7 +16,6 @@ interface CardProps {
 export default function Card({ gif }: CardProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
   const collectionRef = collection(database, 'Users Data');
   const { user } = useUserContext();
 
@@ -36,6 +35,8 @@ export default function Card({ gif }: CardProps) {
   .filter((data) => data.uid === user?.uid)[0];
   const userDocRef = myData ? doc(collectionRef, myData.docId) : null;
 
+  const isFavoriteGif = myData?.favoriteGifs.some((favGif) => favGif.id === gif.id);
+
   const handleDownload = () => {
     saveAs(gif.images.original.url, 'downloaded.gif');
   };
@@ -49,7 +50,7 @@ export default function Card({ gif }: CardProps) {
         originalUrl: gif.images.original.url
       };
       try {
-        if (isFavorite) {
+        if (isFavoriteGif) {
           await updateDoc(userDocRef, {
             favoriteGifs: arrayRemove(favoriteGifData)
           });
@@ -58,7 +59,17 @@ export default function Card({ gif }: CardProps) {
             favoriteGifs: arrayUnion(favoriteGifData)
           });
         }
-        setIsFavorite(!isFavorite);
+
+        setUsers((prevUsers) => {
+          const updatedUsers = [...prevUsers];
+          const updatedUserData = { ...myData, favoriteGifs: isFavoriteGif 
+            ? myData.favoriteGifs.filter((favGif) => favGif.id !== gif.id)
+            : [...myData.favoriteGifs, favoriteGifData]
+          };
+          const userIndex = updatedUsers.findIndex((u) => u.uid === user?.uid);
+          updatedUsers[userIndex] = updatedUserData;
+          return updatedUsers;
+        });
       } catch (error) {
         console.error('Error updating favorites:', error);
       }
@@ -85,11 +96,11 @@ export default function Card({ gif }: CardProps) {
           <button className="download-icon" onClick={handleDownload}>
             <DownloadIcon />
           </button>
-          {isFavorite ? (
+          {isFavoriteGif ? (
             <button className="heart-icon" onClick={handleAddToFavorites}>
               <FavoriteIcon sx={{color: '#ff2222'}} />
             </button>
-          ): (
+          ) : (
             <button className="heart-icon" onClick={handleAddToFavorites}>
               <FavoriteBorderIcon />
             </button>

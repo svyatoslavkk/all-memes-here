@@ -4,17 +4,19 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(5, 5, 5, 0.5);
-  z-index: 1000;
-  .to-create-post-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(173, 173, 173, 0.7);
-    z-index: 900;
-  }
+  background-color: rgba(5, 5, 5, 0.6);
+  cursor: pointer;
+  z-index: 500;
+}
+
+.to-create-post-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(173, 173, 173, 0.7);
+  z-index: 900;
 }
 
 .editor-file {
@@ -22,10 +24,7 @@
 }
 
 .editor {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @include center-screen-styles;
   background-color: $creame-color;
   width: 90%;
   height: auto;

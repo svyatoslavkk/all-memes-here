@@ -41,6 +41,14 @@ export default function Search() {
           <Loader />
         </div>
       )}
+      {!searchGifsLoading && searchTerm.length <= 0 && (
+        <div className="column-content">
+          <h2 className="big-header">Find any gifs you want...</h2>
+        </div>
+      )}
+      {!searchGifsLoading && searchTerm.length <= 0 && (
+        <div></div>
+      )}
       {searchGifsError && <p>Error fetching search results</p>}
       {searchGifs && (
         <div className="cards-list">

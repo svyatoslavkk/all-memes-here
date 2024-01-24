@@ -96,3 +96,7 @@ button {
   @include row-styles;
   align-items: center;
 }
+
+.column-content {
+  @include column-center-styles;
+}

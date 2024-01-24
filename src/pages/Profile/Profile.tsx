@@ -15,12 +15,10 @@ export default function Profile() {
   const [activeButton, setActiveButton] = useState('Favorites');
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>({});
   const [showCreatePost, setShowCreatePost] = useState(false);
   const { user, fireData, fetchPosts, getPostsData } = useUserContext();
   const collectionRef = collection(database, 'Users Data');
-  const postCollectionRef = collection(database, 'Posts Data');
-  const postsDocRef = doc(postCollectionRef, "uIBTpBRYP7C0kaiTFtyH");
 
   const getUsers = async () => {
     try {
@@ -43,24 +41,32 @@ export default function Profile() {
   const userPosts = fetchPosts.filter((post) => post.uid === myUid);
   console.log("userPosts", userPosts);
 
-  const handleDownload = () => {
-    saveAs(gif.images.original.url, 'downloaded.gif');
-  };
-
   const handleCreatePostClick = () => {
     setShowCreatePost(true);
   };
 
-  const handleAddToFavorites = async () => {
+  const handleCreatePostClose = () => {
+    setShowCreatePost(false);
+  };
+
+  const handleAddToFavorites = async (gif: FavGif) => {
     if (userDocRef) {
-      const favoriteGifData = {
-        id: gif.id,
-        url: gif.images.fixed_height.url,
-        title: gif.title,
-        originalUrl: gif.images.original.url
-      };
       try {
-        if (isFavorite) {
+        const favoriteGifData = {
+          id: gif.id,
+          url: gif.url,
+          title: gif.title,
+          originalUrl: gif.originalUrl
+        };
+
+        const isCurrentlyFavorite = favoriteStates[gif.id];
+
+        setFavoriteStates((prevStates) => ({
+          ...prevStates,
+          [gif.id]: !isCurrentlyFavorite
+        }));
+
+        if (isCurrentlyFavorite) {
           await updateDoc(userDocRef, {
             favoriteGifs: arrayRemove(favoriteGifData)
           });
@@ -69,7 +75,6 @@ export default function Profile() {
             favoriteGifs: arrayUnion(favoriteGifData)
           });
         }
-        setIsFavorite(!isFavorite);
       } catch (error) {
         console.error('Error updating favorites:', error);
       }
@@ -80,6 +85,16 @@ export default function Profile() {
     getUsers();
     getPostsData();
   }, []);
+
+  useEffect(() => {
+    if (myData) {
+      const initialFavoriteStates: Record<string, boolean> = {};
+      myData.favoriteGifs.forEach((gif: FavGif) => {
+        initialFavoriteStates[gif.id] = true;
+      });
+      setFavoriteStates(initialFavoriteStates);
+    }
+  }, [myData]);
 
   const fakeImg = 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d9359ae0-065b-4756-bfed-02ad0e0f73f8/dg1t181-2b042eec-17cc-4d17-841b-31c194c091e0.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q5MzU5YWUwLTA2NWItNDc1Ni1iZmVkLTAyYWQwZTBmNzNmOFwvZGcxdDE4MS0yYjA0MmVlYy0xN2NjLTRkMTctODQxYi0zMWMxOTRjMDkxZTAuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hvmrnKtJN42DTXfSG4w82Xz1Y6tWofYGL3LLccckYHY';
 
@@ -158,15 +173,16 @@ export default function Profile() {
                       >
                         <DownloadIcon />
                       </button>
-                      {isFavorite ? (
-                        <button className="heart-icon" onClick={handleAddToFavorites}>
+                      <button 
+                        className="heart-icon" 
+                        onClick={() => handleAddToFavorites(gif)}
+                      >
+                        {favoriteStates[gif.id] ? (
                           <FavoriteIcon sx={{color: '#ff2222'}} />
-                        </button>
-                      ): (
-                        <button className="heart-icon" onClick={handleAddToFavorites}>
+                        ) : (
                           <FavoriteBorderIcon />
-                        </button>
-                      )}
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -181,6 +197,7 @@ export default function Profile() {
           myUsername={myUsername ?? undefined}
           myAvatar={myAvatar ?? undefined}
           myUid={myUid ?? undefined}
+          handleCreatePostClose={handleCreatePostClose}
         />
       )}
     </section>
