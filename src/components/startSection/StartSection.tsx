@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 interface StartSectionProps {
   name: string;
-  link: string;
+  link?: string;
 }
 
 export default function StartSection({name, link}: StartSectionProps) {

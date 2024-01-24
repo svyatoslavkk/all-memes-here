@@ -6,11 +6,15 @@ import Header from '../../components/header/Header';
 export default function MainPage() {
 
   return (
+    <>
     <div className="main-page">
-      <Header />
-      <TrendingGifs />
-      <PostedGifs />
-      <MenuBar />
+      <div className="main-page-content">
+        <Header />
+        <TrendingGifs />
+        <PostedGifs />
+      </div>
     </div>
+    <MenuBar />
+    </>
   );
 }
