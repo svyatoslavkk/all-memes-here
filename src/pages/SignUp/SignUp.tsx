@@ -72,7 +72,7 @@ export default function SignUp() {
           docId: docId,
         });
 
-        navigate("/main");
+        navigate("/");
       }
     } catch (err: any) {
       console.error("Registration error:", err.message);

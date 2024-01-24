@@ -23,7 +23,7 @@ export default function Login() {
           .getIdToken()
           .then((accessToken) => {
             sessionStorage.setItem("Token", accessToken);
-            navigate("/main");
+            navigate("/");
           })
           .catch((error) => {
             console.error("getIdToken error", error);
