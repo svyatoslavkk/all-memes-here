@@ -6,7 +6,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Search from "./pages/Search/Search";
 import Profile from "./pages/Profile/Profile";
-import { UserProvider } from './context/UserContext';
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <UserProvider>
           <Routes>
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/search" element={<Search />} />
