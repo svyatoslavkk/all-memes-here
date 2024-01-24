@@ -7,7 +7,7 @@ export type Gif = {
     };
     original: {
       url: string;
-    }
+    };
   };
   title: string;
   type: string;
@@ -19,7 +19,7 @@ export type FavGif = {
   url: string;
   title: string;
   originalUrl: string;
-}
+};
 
 export type FormValues = {
   email: string;
@@ -34,8 +34,8 @@ export type User = {
   email: string;
   uid: string;
   userName: string;
-  favoriteGifs: []; 
-}
+  favoriteGifs: FavGif[];
+};
 
 export type Post = {
   avatar: string;
@@ -44,4 +44,4 @@ export type Post = {
   timestamp: string;
   uid: string;
   userName: string;
-}
+};

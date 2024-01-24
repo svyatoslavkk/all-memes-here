@@ -1,4 +1,7 @@
-import { useGetTrendingGifsQuery, useGetTrendingStickersQuery } from "../../redux/api/api";
+import {
+  useGetTrendingGifsQuery,
+  useGetTrendingStickersQuery,
+} from "../../redux/api/api";
 import { Gif } from "../../types/types";
 import Card from "../card/Card";
 import StartSection from "../startSection/StartSection";
@@ -38,21 +41,23 @@ export default function TrendingGifs() {
 
   const nameTrGifs = "Trending Gifs";
   const nameTrStcks = "Trending Stickers";
-  const link = "/search"
+  const link = "/search";
 
   return (
     <section className="trending-gifs">
       <StartSection name={nameTrGifs} link={link} />
       <div className="cards-list">
-        {trendingGifs && trendingGifs?.data
-          .slice(0, 4)
-          .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
+        {trendingGifs &&
+          trendingGifs?.data
+            .slice(0, 16)
+            .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
       </div>
       <StartSection name={nameTrStcks} link={link} />
       <div className="cards-list">
-        {trendingStickers && trendingStickers?.data
-          .slice(0, 4)
-          .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
+        {trendingStickers &&
+          trendingStickers?.data
+            .slice(0, 4)
+            .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
       </div>
     </section>
   );

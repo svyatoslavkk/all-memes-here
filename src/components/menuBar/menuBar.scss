@@ -1,6 +1,6 @@
 .menu-bar {
   position: fixed;
-  bottom: 8px;
+  bottom: 1%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -8,24 +8,39 @@
   align-items: center;
   justify-content: space-around;
   padding: 0.5rem;
-  backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 0.5rem;
   z-index: 100;
+  transition: 0.3s ease;
 }
 
 .menu-bar-icon {
   display: flex;
-  flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   text-decoration: none;
   color: #666;
-  border-radius: 50%;
-  padding: 0.2rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.1s ease;
 }
 
 .active2 {
   color: #000;
+}
+
+.menu-bar-text {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .menu-bar-text {
+    display: flex;
+    font-weight: 500;
+  }
+  .active2 {
+    background-color: rgba(230, 204, 178, 0.6);
+  }
 }

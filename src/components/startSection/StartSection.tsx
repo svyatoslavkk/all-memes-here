@@ -5,13 +5,21 @@ interface StartSectionProps {
   link?: string;
 }
 
-export default function StartSection({name, link}: StartSectionProps) {
+export default function StartSection({ name, link }: StartSectionProps) {
   return (
     <div className="flex-between">
       <h3>{name}</h3>
-      <Link to={link} className="transparent-button" style={{textDecoration: 'none'}}>
-        <span className="small-text" style={{color: '#7f5539'}}>More</span>
-      </Link>
+      {link && (
+        <Link
+          to={link}
+          className="transparent-button"
+          style={{ textDecoration: "none" }}
+        >
+          <span className="small-text" style={{ color: "#7f5539" }}>
+            More
+          </span>
+        </Link>
+      )}
     </div>
-  )
+  );
 }

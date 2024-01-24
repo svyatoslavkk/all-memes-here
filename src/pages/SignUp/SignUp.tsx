@@ -1,41 +1,48 @@
 import { useState } from "react";
 // import { Formik } from "formik";
 // import { FormValues } from "../../types/types";
-import { useNavigate } from 'react-router-dom';
-import { app, database } from '../../firebase/firebaseConfig';
+import { useNavigate } from "react-router-dom";
+import { app, database } from "../../firebase/firebaseConfig";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile
-} from 'firebase/auth';
+  updateProfile,
+} from "firebase/auth";
 import Loader from "../../components/loader/Loader";
-import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function SignUp() {
   const auth = getAuth(app);
   const navigate = useNavigate();
-  const [userName, setUserName] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const collectionRef = collection(database, 'Users Data');
+  const collectionRef = collection(database, "Users Data");
 
   const handleRegistration = async (event: any) => {
     event.preventDefault();
     try {
       setLoading(true);
-      const response = await createUserWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const currentUser = auth.currentUser;
 
       if (currentUser) {
         let pictureUrl = null;
-        
+
         if (avatar) {
           const storage = getStorage(app);
-          const storageRef = ref(storage, 'avatars/' + currentUser?.uid + '.jpg');
+          const storageRef = ref(
+            storage,
+            "avatars/" + currentUser?.uid + ".jpg",
+          );
           await uploadBytes(storageRef, avatar);
           pictureUrl = await getDownloadURL(storageRef);
         }
@@ -46,7 +53,8 @@ export default function SignUp() {
         });
 
         console.log(response.user);
-        sessionStorage.setItem('Token', response.user?.accessToken);
+        const idToken = await currentUser.getIdToken();
+        sessionStorage.setItem("Token", idToken);
 
         const docRef = await addDoc(collectionRef, {
           uid: currentUser.uid,
@@ -63,10 +71,10 @@ export default function SignUp() {
           docId: docId,
         });
 
-        navigate('/main');
+        navigate("/main");
       }
     } catch (err: any) {
-      console.error('Registration error:', err.message);
+      console.error("Registration error:", err.message);
     } finally {
       setLoading(false);
     }
@@ -90,7 +98,7 @@ export default function SignUp() {
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-  
+
     if (file) {
       setAvatar(file);
     }
@@ -105,8 +113,8 @@ export default function SignUp() {
             Choose Avatar
           </label>
           <input
-              type="file"
-              id="avatarInput"
+            type="file"
+            id="avatarInput"
             accept="image/*"
             onChange={handleAvatarChange}
           />
@@ -138,15 +146,12 @@ export default function SignUp() {
         <div className="primary-input-section">
           <input
             className="input-text"
-            type="password" 
+            type="password"
             placeholder="Password"
             onChange={handlePasswordChange}
           />
         </div>
-        <button
-          type="submit"
-          className="full-width-button"
-        >
+        <button type="submit" className="full-width-button">
           <span className="mid-header">Submit</span>
         </button>
       </form>
