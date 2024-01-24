@@ -46,9 +46,7 @@ export default function Search() {
           <h2 className="big-header">Find any gifs you want...</h2>
         </div>
       )}
-      {!searchGifsLoading && searchTerm.length <= 0 && (
-        <div></div>
-      )}
+      <div></div>
       {searchGifsError && <p>Error fetching search results</p>}
       {searchGifs && (
         <div className="cards-list">

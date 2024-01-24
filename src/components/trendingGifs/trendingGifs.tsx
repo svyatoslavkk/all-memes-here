@@ -2,6 +2,7 @@ import { useGetTrendingGifsQuery } from "../../redux/api/api";
 import { Gif } from "../../types/types";
 import Card from "../card/Card";
 import StartSection from "../startSection/StartSection";
+import { Link } from "react-router-dom";
 
 export default function TrendingGifs() {
   const {
@@ -21,10 +22,11 @@ export default function TrendingGifs() {
   console.log("Trending GIFs", trendingGifs.data);
 
   const name = "Trending Gifs";
+  const link = "/search"
 
   return (
     <section className="trending-gifs">
-      <StartSection name={name} />
+      <StartSection name={name} link={link} />
       <div className="cards-list">
         {trendingGifs?.data
           .slice(0, 4)
