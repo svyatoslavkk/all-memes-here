@@ -1,7 +1,13 @@
 .profile {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.profile-block {
   @include default-container-styles;
-  justify-content: center;
-  align-items: center;
   padding: 1rem 1rem 4rem 1rem;
 }
 

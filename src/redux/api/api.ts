@@ -20,7 +20,13 @@ export const api = createApi({
     getSearchGifs: builder.query({
       query: (searchTerm: string) => `gifs/search?q=${searchTerm}&api_key=${GIPHY_API_KEY}`,
     }),
+    getTrendingStickers: builder.query({
+      query: () => `stickers/trending?api_key=${GIPHY_API_KEY}&limit=20`,
+    }),
+    getSearchStickers: builder.query({
+      query: (searchTerm: string) => `stickers/search?q=${searchTerm}&api_key=${GIPHY_API_KEY}`,
+    }),
   }),
 });
 
-export const { useGetTrendingGifsQuery, useGetRandomGifsQuery, useGetSearchGifsQuery } = api;
+export const { useGetTrendingGifsQuery, useGetRandomGifsQuery, useGetSearchGifsQuery, useGetTrendingStickersQuery, useGetSearchStickersQuery } = api;

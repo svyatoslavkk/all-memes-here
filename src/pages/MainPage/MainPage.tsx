@@ -10,8 +10,8 @@ export default function MainPage() {
     <div className="main-page">
       <div className="main-page-content">
         <Header />
-        <TrendingGifs />
         <PostedGifs />
+        <TrendingGifs />
       </div>
     </div>
     <MenuBar />
