@@ -106,78 +106,79 @@ export default function SignUp() {
   };
 
   return (
-    <div className="sign-up">
-      <h2 style={{ textAlign: "center" }}>Welcome to our App!</h2>
-      <form className="sign-up-form" onSubmit={handleRegistration}>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="file"
-            id="avatarInput"
-            accept="image/*"
-            onChange={handleAvatarChange}
-          />
-        </div>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="text"
-            placeholder="Full Name"
-            onChange={handleFullnameChange}
-          />
-        </div>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="text"
-            placeholder="Username"
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="text"
-            placeholder="Email"
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="password"
-            placeholder="Password"
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit" className="full-width-button">
-          <span className="mid-header">Sign Up</span>
-        </button>
-        <p className="mid-text">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            style={{
-              color: "#9c6644",
-              fontWeight: 600,
-              textDecoration: "none",
-            }}
-          >
-            Login
-          </Link>
-        </p>
-      </form>
-      <span className="dividing">
-        <span className="text">
-          <span className="mid-header">or continue with</span>
+    <>
+      <div className="sign-up">
+        <h2 style={{ textAlign: "center" }}>Welcome to our App!</h2>
+        <form className="sign-up-form" onSubmit={handleRegistration}>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="file"
+              id="avatarInput"
+              accept="image/*"
+              onChange={handleAvatarChange}
+            />
+          </div>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="text"
+              placeholder="Full Name"
+              onChange={handleFullnameChange}
+            />
+          </div>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="text"
+              placeholder="Username"
+              onChange={handleUsernameChange}
+            />
+          </div>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="text"
+              placeholder="Email"
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit" className="full-width-button">
+            <span className="mid-header">Sign Up</span>
+          </button>
+          <p className="mid-text">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              style={{
+                color: "#9c6644",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Login
+            </Link>
+          </p>
+        </form>
+        <span className="dividing">
+          <span className="text">
+            <span className="mid-header">or continue with</span>
+          </span>
         </span>
-      </span>
-      <div className="flex-content">
-        <button className="shadow-button">
-          <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
-        </button>
-      </div>
-      {/* <Formik
+        <div className="flex-content">
+          <button className="shadow-button">
+            <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
+          </button>
+        </div>
+        {/* <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values: FormValues) => {
           const errors: Partial<FormValues> = {};
@@ -267,6 +268,7 @@ export default function SignUp() {
           </form>
         )}
       </Formik> */}
+      </div>
       {loading && (
         <div className="overlay">
           <span className="absolute">
@@ -274,6 +276,6 @@ export default function SignUp() {
           </span>
         </div>
       )}
-    </div>
+    </>
   );
 }

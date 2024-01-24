@@ -1,19 +1,17 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FormValues } from "../../types/types";
-import { app } from '../../firebase/firebaseConfig';
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { app } from "../../firebase/firebaseConfig";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Loader from "../../components/loader/Loader";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export default function Login() {
   const auth = getAuth(app);
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const signIn = async (event: any) => {
@@ -23,23 +21,24 @@ export default function Login() {
       .then((response) => {
         const user = response.user;
         console.log(user);
-        user.getIdToken()
+        user
+          .getIdToken()
           .then((accessToken) => {
-            sessionStorage.setItem('Token', accessToken);
-            navigate('/main');
+            sessionStorage.setItem("Token", accessToken);
+            navigate("/main");
           })
           .catch((error) => {
-            console.error('getIdToken error', error);
+            console.error("getIdToken error", error);
           });
       })
       .catch((error) => {
-        console.error('signIn error', error);
+        console.error("signIn error", error);
       })
       .finally(() => {
         setLoading(false);
       });
   };
-  
+
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -78,32 +77,56 @@ export default function Login() {
   };
 
   return (
-    <div className="login">
-      <h2 style={{ textAlign: "center" }}>Login</h2>
-      <form className="login-form">
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="text"
-            name="email"
-            placeholder="Email"
-            onChange={handleEmailChange}
-          />
+    <>
+      <div className="login">
+        <h2 style={{ textAlign: "center" }}>Welcome back to our App!</h2>
+        <form className="login-form">
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="primary-input-section">
+            <input
+              className="input-text"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit" className="full-width-button" onClick={signIn}>
+            <span className="mid-header">Login</span>
+          </button>
+          <p className="mid-text">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              style={{
+                color: "#9c6644",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Sign Up
+            </Link>
+          </p>
+        </form>
+        <span className="dividing">
+          <span className="text">
+            <span className="mid-header">or continue with</span>
+          </span>
+        </span>
+        <div className="flex-content">
+          <button className="shadow-button">
+            <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
+          </button>
         </div>
-        <div className="primary-input-section">
-          <input
-            className="input-text"
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button type="submit" className="full-width-button" onClick={signIn}>
-          <span className="mid-header">Login</span>
-        </button>
-      </form>
-      {/* <Formik
+        {/* <Formik
         initialValues={initialValues}
         validate={validate}
         onSubmit={onSubmit}
@@ -136,6 +159,7 @@ export default function Login() {
           </button>
         </Form>
       </Formik> */}
+      </div>
       {loading && (
         <div className="overlay">
           <span className="absolute">
@@ -143,6 +167,6 @@ export default function Login() {
           </span>
         </div>
       )}
-    </div>
+    </>
   );
 }
