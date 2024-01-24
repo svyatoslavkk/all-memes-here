@@ -1,5 +1,3 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { FormValues } from "../../types/types";
 import { app } from "../../firebase/firebaseConfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,35 +43,6 @@ export default function Login() {
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-  };
-
-  const initialValues: FormValues = {
-    email: "",
-    password: "",
-  };
-
-  const validate = (values: FormValues) => {
-    const errors: Partial<FormValues> = {};
-
-    if (!values.email) {
-      errors.email = "Required";
-    }
-
-    if (!values.password) {
-      errors.password = "Required";
-    }
-
-    return errors;
-  };
-
-  const onSubmit = (
-    values: FormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
-  ) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
   };
 
   return (

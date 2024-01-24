@@ -1,7 +1,7 @@
-import TrendingGifs from "../../components/trendingGifs/TrendingGifs";
 import PostedGifs from "../../components/postedGifs/PostedGifs";
 import MenuBar from "../../components/menuBar/MenuBar";
 import Header from "../../components/header/Header";
+import TrendingGifs from "../../components/trendingGifs/trendingGifs";
 
 export default function MainPage() {
   return (
