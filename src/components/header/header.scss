@@ -1,0 +1,12 @@
+.header {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1100px;
+  padding: 1rem;
+  background-color: $lavanda-color;
+  border-end-start-radius: 1rem;
+  border-end-end-radius: 1rem;
+  z-index: 9999;
+}

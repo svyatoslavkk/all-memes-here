@@ -41,9 +41,9 @@ export default function Search() {
 
   return (
     <>
+      <Header />
       <div className="search">
         <div className="search-content">
-          <Header />
           <div className="profile-buttons">
             <button
               className={`favorite-section-button ${activeButton === "Gifs" ? "active" : ""}`}
@@ -70,13 +70,7 @@ export default function Search() {
               <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
             </span>
           </div>
-          {searchGifsLoading && (
-            <div className="test-loader">
-              <p>Loading...</p>
-              <Loader />
-            </div>
-          )}
-          {searchStickersLoading && (
+          {searchGifsLoading && searchStickersLoading && (
             <div className="test-loader">
               <p>Loading...</p>
               <Loader />
