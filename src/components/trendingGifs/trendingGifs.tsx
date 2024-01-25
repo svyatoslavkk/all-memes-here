@@ -45,7 +45,7 @@ export default function TrendingGifs() {
       <div className="cards-list">
         {trendingGifs &&
           trendingGifs?.data
-            .slice(0, 16)
+            .slice(0, 12)
             .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
       </div>
       <StartSection name={nameTrStcks} link={link} />
