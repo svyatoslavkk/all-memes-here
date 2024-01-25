@@ -35,10 +35,6 @@ export default function TrendingGifs() {
     return <p>Error fetching stickers</p>;
   }
 
-  console.log("Trending GIFs", trendingGifs.data);
-
-  console.log("trendingStickers", trendingStickers.data);
-
   const nameTrGifs = "Trending Gifs";
   const nameTrStcks = "Trending Stickers";
   const link = "/search";

@@ -1,4 +1,5 @@
 import MenuBar from "../../components/menuBar/MenuBar";
+import Header from "../../components/header/Header";
 import { useUserContext } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import {
@@ -111,6 +112,7 @@ export default function Profile() {
 
   return (
     <>
+      <Header />
       <section className="profile">
         <div className="profile-block">
           <div className="profile-content">

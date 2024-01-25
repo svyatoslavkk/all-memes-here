@@ -9,7 +9,7 @@
   justify-content: space-around;
   padding: 0.5rem;
   backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 0.5rem;
   z-index: 100;
   transition: 0.3s ease;
@@ -36,6 +36,9 @@
 }
 
 @media (min-width: 1024px) {
+  .menu-bar {
+    display: none;
+  }
   .menu-bar-text {
     display: flex;
     font-weight: 500;

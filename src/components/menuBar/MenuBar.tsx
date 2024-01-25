@@ -11,7 +11,7 @@ export default function MenuBar({ handleCreatePostClick }: any) {
     <aside className="menu-bar">
       <Link
         to="/"
-        className={`menu-bar-icon ${location.pathname === "/main" ? "active2" : ""}`}
+        className={`menu-bar-icon ${location.pathname === "/" ? "active2" : ""}`}
       >
         <WidgetsIcon />
         <span className="menu-bar-text">Home</span>
