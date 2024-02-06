@@ -30,7 +30,7 @@ export default function Header() {
     <>
       <header className="header flex-between">
         <div className="header-menu dashboard">
-          <Link to="/" className="menu-bar-icon" onClick={handleLogout}>
+          <Link to="/" className="menu-bar-icon">
             <GridViewRoundedIcon />
           </Link>
         </div>
