@@ -26,6 +26,8 @@ export default function Search() {
     setSearchTerm(event.target.value);
   };
 
+  console.log("searchStickers", searchStickers);
+
   useEffect(() => {
     const delayTimer = setTimeout(() => {
       if (activeButton === "Gifs") {
@@ -67,12 +69,13 @@ export default function Search() {
               <SearchIcon fontSize="medium" sx={{ color: "#262020" }} />
             </span>
           </div>
-          {searchGifsLoading && searchStickersLoading && (
-            <div className="test-loader">
-              <p>Loading...</p>
-              <Loader />
-            </div>
-          )}
+          {searchGifsLoading ||
+            (searchStickersLoading && (
+              <div className="test-loader">
+                <p>Loading...</p>
+                <Loader />
+              </div>
+            ))}
           {!searchGifsLoading && searchTerm.length <= 0 && (
             <div className="column-content">
               <h2 className="big-header">
@@ -97,6 +100,12 @@ export default function Search() {
               ))}
             </div>
           )}
+          {activeButton === "Gifs" &&
+            searchGifs.data.length === 0 &&
+            searchTerm.length > 0 && <p>No gifs. Try again</p>}
+          {activeButton === "Stickers" &&
+            searchStickers.data.length === 0 &&
+            searchTerm.length > 0 && <p>No stickers. Try again</p>}
         </div>
       </div>
     </>

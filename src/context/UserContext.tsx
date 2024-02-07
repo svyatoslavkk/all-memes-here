@@ -58,6 +58,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
   };
 
   const getPostsData = async () => {
+    setLoading(true);
     try {
       const postsDocSnapshot = await getDocs(postCollectionRef);
       const postsDoc = postsDocSnapshot.docs.map((doc) => ({
@@ -68,6 +69,8 @@ export const UserProvider: React.FC<any> = ({ children }) => {
       setFetchPosts(postsArray);
     } catch (error) {
       console.error("Error getting posts document:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
