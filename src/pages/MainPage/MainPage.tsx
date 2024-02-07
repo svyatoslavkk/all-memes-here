@@ -1,5 +1,5 @@
 import PostedGifs from "../../components/postedGifs/PostedGifs";
-import TrendingGifs from "../../components/trendingGifs/TrendingGifs";
+import TrendGifs from "../../components/trendGifs/TrendGifs";
 
 export default function MainPage() {
   return (
@@ -7,7 +7,7 @@ export default function MainPage() {
       <div className="main-page">
         <div className="main-page-content">
           <PostedGifs />
-          <TrendingGifs />
+          <TrendGifs />
         </div>
       </div>
     </>
