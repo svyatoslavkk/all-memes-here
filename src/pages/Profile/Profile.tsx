@@ -92,6 +92,7 @@ export default function Profile() {
                     .filter((data: User) => data.uid === user?.uid)
                     .map((data: User) => (
                       <img
+                        key={user?.uid}
                         src={data.avatar ? data.avatar : fakeImg}
                         className="big-circle-img"
                         alt=""
@@ -102,7 +103,7 @@ export default function Profile() {
                     fireData
                       .filter((data: User) => data.uid === user?.uid)
                       .map((data: User) => (
-                        <h3 className="big-header">
+                        <h3 key={user?.uid} className="big-header">
                           {data.fullName ? data.fullName : "NONE"}
                         </h3>
                       ))}
@@ -110,7 +111,7 @@ export default function Profile() {
                     fireData
                       .filter((data: User) => data.uid === user?.uid)
                       .map((data: User) => (
-                        <span className="mid-text">
+                        <span key={user?.uid} className="mid-text">
                           @{data.userName ? data.userName : "NONE"}
                         </span>
                       ))}

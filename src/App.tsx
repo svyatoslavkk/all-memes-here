@@ -15,13 +15,15 @@ function App() {
       <BrowserRouter>
         <UserProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route path="/">
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
 
-            <Route element={<RootLayout />}>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route element={<RootLayout />}>
+                <Route index element={<MainPage />} />
+                <Route path="search" element={<Search />} />
+                <Route path="profile" element={<Profile />} />
+              </Route>
             </Route>
           </Routes>
         </UserProvider>
