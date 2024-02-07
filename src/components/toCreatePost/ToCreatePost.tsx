@@ -23,9 +23,9 @@ export default function ToCreatePost({ handleCreatePostClose }: ToCreatePost) {
   const collectionRef = collection(database, "Posts Data");
   const userDocRef = doc(collectionRef, "uIBTpBRYP7C0kaiTFtyH");
   const myData = users.filter((data) => data.uid === user?.uid)[0];
-  const myUsername = myData ? myData.userName : null;
-  const myAvatar = myData ? myData.avatar : null;
-  const myUid = myData ? myData.uid : null;
+  const myUsername = myData ? myData.userName : "";
+  const myAvatar = myData ? myData.avatar : "";
+  const myUid = myData ? myData.uid : "";
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];

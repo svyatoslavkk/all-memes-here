@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   doc,
   collection,
-  getDocs,
   updateDoc,
   arrayUnion,
   arrayRemove,

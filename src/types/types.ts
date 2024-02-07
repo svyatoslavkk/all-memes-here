@@ -26,6 +26,27 @@ export type FormValues = {
   password: string;
 };
 
+export interface AuthUser extends User {
+  accessToken: string;
+  auth: any;
+  displayName: string;
+  email: string;
+  emailVerified: boolean;
+  isAnonymous: boolean;
+  metadata: any;
+  phoneNumber: string | null;
+  photoURL: string;
+  proactiveRefresh: any;
+  providerData: any[];
+  providerId: string;
+  reloadListener: any;
+  reloadUserInfo: any;
+  stsTokenManager: any;
+  tenantId: string | null;
+  uid: string;
+  refreshToken: string;
+}
+
 export type User = {
   id: string;
   avatar: string;

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { app, database } from "../firebase/firebaseConfig";
-import { User } from "../types/types";
+import { AuthUser, Post, User } from "../types/types";
 
 interface PostData {
   id: string;
@@ -11,25 +11,26 @@ interface PostData {
 
 const UserContext = createContext<
   | {
-      user: User;
+      user: AuthUser | null;
       users: User[];
       fireData: any[];
       loading: boolean;
       fetchData: () => Promise<void>;
-      fetchPosts: any[];
+      fetchPosts: Post[];
       getPostsData: () => Promise<void>;
     }
   | undefined
 >(undefined);
 
 export const UserProvider: React.FC<any> = ({ children }) => {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [fireData, setFireData] = useState<any[]>([]);
   const [fetchPosts, setFetchPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const collectionRef = collection(database, "Users Data");
   const postCollectionRef = collection(database, "Posts Data");
+  console.log("user", user);
 
   const getUsers = async () => {
     setLoading(true);
@@ -83,11 +84,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
 
       const auth = getAuth(app);
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          setUser(null);
-        }
+        setUser(user);
       });
 
       return () => unsubscribe();
