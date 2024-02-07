@@ -26,8 +26,6 @@ export default function Search() {
     setSearchTerm(event.target.value);
   };
 
-  console.log("searchStickers", searchStickers);
-
   useEffect(() => {
     const delayTimer = setTimeout(() => {
       if (activeButton === "Gifs") {
@@ -101,9 +99,11 @@ export default function Search() {
             </div>
           )}
           {activeButton === "Gifs" &&
+            searchGifs &&
             searchGifs.data.length === 0 &&
             searchTerm.length > 0 && <p>No gifs. Try again</p>}
           {activeButton === "Stickers" &&
+            searchStickers &&
             searchStickers.data.length === 0 &&
             searchTerm.length > 0 && <p>No stickers. Try again</p>}
         </div>
