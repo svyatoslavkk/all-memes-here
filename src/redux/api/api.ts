@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
+const GIPHY_API_KEY = "1zlTbIJOzZlKwgt08mHZFRC9QThRhHkL";
 
 export const api = createApi({
   reducerPath: "memesApi",
