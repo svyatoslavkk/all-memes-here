@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { app, database } from "../firebase/firebaseConfig";
-import { AuthUser, Post, User } from "../types/types";
+import { Post, User } from "../types/types";
 
 interface PostData {
   id: string;
@@ -11,7 +11,7 @@ interface PostData {
 
 const UserContext = createContext<
   | {
-      user: AuthUser | null;
+      user: any;
       users: User[];
       fireData: any[];
       loading: boolean;
@@ -23,7 +23,7 @@ const UserContext = createContext<
 >(undefined);
 
 export const UserProvider: React.FC<any> = ({ children }) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [fireData, setFireData] = useState<any[]>([]);
   const [fetchPosts, setFetchPosts] = useState([]);
