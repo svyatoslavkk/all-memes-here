@@ -1,7 +1,4 @@
-import {
-  useGetTrendingGifsQuery,
-  useGetTrendingStickersQuery,
-} from "../../redux/api/api";
+import { useGetTrendingGifsQuery } from "../../redux/api/api";
 import { Gif } from "../../types/types";
 import Card from "../card/Card";
 import StartSection from "../startSection/StartSection";
@@ -13,11 +10,11 @@ export default function TrendingGifs() {
     isError: trendingGifsError,
   } = useGetTrendingGifsQuery({});
 
-  const {
-    data: trendingStickers,
-    isLoading: trendingStickersLoading,
-    isError: trendingStickersError,
-  } = useGetTrendingStickersQuery({});
+  // const {
+  //   data: trendingStickers,
+  //   isLoading: trendingStickersLoading,
+  //   isError: trendingStickersError,
+  // } = useGetTrendingStickersQuery({});
 
   if (trendingGifsLoading) {
     return <p>Loading...</p>;
@@ -27,16 +24,16 @@ export default function TrendingGifs() {
     return <p>Error fetching gifs</p>;
   }
 
-  if (trendingStickersLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (trendingStickersLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (trendingStickersError) {
-    return <p>Error fetching stickers</p>;
-  }
+  // if (trendingStickersError) {
+  //   return <p>Error fetching stickers</p>;
+  // }
 
   const nameTrGifs = "Trending Gifs";
-  const nameTrStcks = "Trending Stickers";
+  // const nameTrStcks = "Trending Stickers";
   const link = "/search";
 
   return (
@@ -48,13 +45,13 @@ export default function TrendingGifs() {
             .slice(0, 12)
             .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
       </div>
-      <StartSection name={nameTrStcks} link={link} />
+      {/* <StartSection name={nameTrStcks} link={link} />
       <div className="cards-list">
         {trendingStickers &&
           trendingStickers?.data
             .slice(0, 4)
             .map((gif: Gif) => <Card gif={gif} key={gif.id} />)}
-      </div>
+      </div> */}
     </section>
   );
 }
