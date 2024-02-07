@@ -1,5 +1,3 @@
-import MenuBar from "../../components/menuBar/MenuBar";
-import Header from "../../components/header/Header";
 import { useUserContext } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import {
@@ -16,49 +14,21 @@ import { saveAs } from "file-saver";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DownloadIcon from "@mui/icons-material/Download";
-import ToCreatePost from "../../components/toCreatePost/ToCreatePost";
 import PostCard from "../../components/PostCard/PostCard";
 
 export default function Profile() {
+  const { user, users, fireData, loading, fetchPosts, getPostsData } =
+    useUserContext();
   const [activeButton, setActiveButton] = useState("Favorites");
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
   const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>(
     {},
   );
-  const [showCreatePost, setShowCreatePost] = useState(false);
-  const { user, fireData, fetchPosts, getPostsData } = useUserContext();
   const collectionRef = collection(database, "Users Data");
-
-  const getUsers = async () => {
-    try {
-      const snapshot = await getDocs(collectionRef);
-      const userList = snapshot.docs.map(
-        (doc) => ({ id: doc.id, ...doc.data() }) as User,
-      );
-      setUsers(userList);
-    } catch (error) {
-      console.error("Error getting users:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const myData = users.filter((data) => data.uid === user?.uid)[0];
   const userDocRef = myData ? doc(collectionRef, myData.docId) : null;
-  const myUsername = myData ? myData.userName : null;
-  const myAvatar = myData ? myData.avatar : null;
   const myUid = myData ? myData.uid : null;
   const userPosts = fetchPosts.filter((post) => post.uid === myUid);
-  console.log("userPosts", userPosts);
-
-  const handleCreatePostClick = () => {
-    setShowCreatePost(true);
-  };
-
-  const handleCreatePostClose = () => {
-    setShowCreatePost(false);
-  };
 
   const handleAddToFavorites = async (gif: FavGif) => {
     if (userDocRef) {
@@ -93,7 +63,6 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    getUsers();
     getPostsData();
   }, []);
 
@@ -112,7 +81,6 @@ export default function Profile() {
 
   return (
     <>
-      <Header />
       <section className="profile">
         <div className="profile-block">
           <div className="profile-content">
@@ -227,15 +195,6 @@ export default function Profile() {
           </div>
         </div>
       </section>
-      <MenuBar handleCreatePostClick={handleCreatePostClick} />
-      {showCreatePost && (
-        <ToCreatePost
-          myUsername={myUsername ?? undefined}
-          myAvatar={myAvatar ?? undefined}
-          myUid={myUid ?? undefined}
-          handleCreatePostClose={handleCreatePostClose}
-        />
-      )}
     </>
   );
 }

@@ -5,6 +5,7 @@ import { app, database } from "../../firebase/firebaseConfig";
 import { collection, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Loader from "../loader/Loader";
+import { useUserContext } from "../../context/UserContext";
 
 interface ToCreatePost {
   myUsername?: string;
@@ -13,18 +14,18 @@ interface ToCreatePost {
   handleCreatePostClose: () => void;
 }
 
-export default function ToCreatePost({
-  myUsername,
-  myAvatar,
-  myUid,
-  handleCreatePostClose,
-}: ToCreatePost) {
+export default function ToCreatePost({ handleCreatePostClose }: ToCreatePost) {
+  const { user, users } = useUserContext();
   const [selectedFile, setSelectedFile] = useState(null);
   const [caption, setCaption] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const storage = getStorage(app);
   const collectionRef = collection(database, "Posts Data");
   const userDocRef = doc(collectionRef, "uIBTpBRYP7C0kaiTFtyH");
+  const myData = users.filter((data) => data.uid === user?.uid)[0];
+  const myUsername = myData ? myData.userName : null;
+  const myAvatar = myData ? myData.avatar : null;
+  const myUid = myData ? myData.uid : null;
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];

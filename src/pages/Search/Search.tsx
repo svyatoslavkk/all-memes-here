@@ -5,10 +5,8 @@ import {
   useGetSearchStickersQuery,
 } from "../../redux/api/api";
 import { Gif } from "../../types/types";
-import Header from "../../components/header/Header";
 import Card from "../../components/card/Card";
 import Loader from "../../components/loader/Loader";
-import MenuBar from "../../components/menuBar/MenuBar";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +39,6 @@ export default function Search() {
 
   return (
     <>
-      <Header />
       <div className="search">
         <div className="search-content">
           <div className="profile-buttons">
@@ -102,7 +99,6 @@ export default function Search() {
           )}
         </div>
       </div>
-      <MenuBar />
     </>
   );
 }

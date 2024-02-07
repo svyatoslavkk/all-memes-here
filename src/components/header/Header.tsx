@@ -8,8 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import Loader from "../loader/Loader";
+import { MenuBarProps } from "../../types/types";
 
-export default function Header() {
+export default function Header({ handleCreatePostClick }: MenuBarProps) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
@@ -49,7 +50,7 @@ export default function Header() {
             <ExploreIcon />
             <span className="menu-bar-text">Explore</span>
           </Link>
-          <div className="menu-bar-icon">
+          <div className="menu-bar-icon" onClick={handleCreatePostClick}>
             <AddCircleIcon />
             <span className="menu-bar-text">Create</span>
           </div>

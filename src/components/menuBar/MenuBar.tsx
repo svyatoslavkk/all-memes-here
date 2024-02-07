@@ -3,8 +3,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link, useLocation } from "react-router-dom";
+import { MenuBarProps } from "../../types/types";
 
-export default function MenuBar({ handleCreatePostClick }: any) {
+export default function MenuBar({ handleCreatePostClick }: MenuBarProps) {
   const location = useLocation();
 
   return (

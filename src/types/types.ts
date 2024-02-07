@@ -45,3 +45,7 @@ export type Post = {
   uid: string;
   userName: string;
 };
+
+export interface MenuBarProps {
+  handleCreatePostClick?: () => void;
+}

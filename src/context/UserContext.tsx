@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { app, database } from "../firebase/firebaseConfig";
+import { User } from "../types/types";
 
 interface PostData {
   id: string;
@@ -10,8 +11,10 @@ interface PostData {
 
 const UserContext = createContext<
   | {
-      user: any;
+      user: User;
+      users: User[];
       fireData: any[];
+      loading: boolean;
       fetchData: () => Promise<void>;
       fetchPosts: any[];
       getPostsData: () => Promise<void>;
@@ -20,11 +23,28 @@ const UserContext = createContext<
 >(undefined);
 
 export const UserProvider: React.FC<any> = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User>(null);
+  const [users, setUsers] = useState<User[]>([]);
   const [fireData, setFireData] = useState<any[]>([]);
   const [fetchPosts, setFetchPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const collectionRef = collection(database, "Users Data");
   const postCollectionRef = collection(database, "Posts Data");
+
+  const getUsers = async () => {
+    setLoading(true);
+    try {
+      const snapshot = await getDocs(collectionRef);
+      const userList = snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() }) as User,
+      );
+      setUsers(userList);
+    } catch (error) {
+      console.error("Error getting users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -54,6 +74,7 @@ export const UserProvider: React.FC<any> = ({ children }) => {
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
     if (token) {
+      getUsers();
       fetchData();
       getPostsData();
 
@@ -72,7 +93,15 @@ export const UserProvider: React.FC<any> = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, fireData, fetchData, fetchPosts, getPostsData }}
+      value={{
+        user,
+        users,
+        fireData,
+        loading,
+        fetchData,
+        fetchPosts,
+        getPostsData,
+      }}
     >
       {children}
     </UserContext.Provider>

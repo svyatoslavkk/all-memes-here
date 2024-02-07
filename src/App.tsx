@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Search from "./pages/Search/Search";
 import Profile from "./pages/Profile/Profile";
 import { UserProvider } from "./context/UserContext";
+import RootLayout from "./_root/RootLayout";
 
 function App() {
   return (
@@ -14,11 +15,14 @@ function App() {
       <BrowserRouter>
         <UserProvider>
           <Routes>
-            <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/profile" element={<Profile />} />
+
+            <Route element={<RootLayout />}>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
           </Routes>
         </UserProvider>
       </BrowserRouter>
