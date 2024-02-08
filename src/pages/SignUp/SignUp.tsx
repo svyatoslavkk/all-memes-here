@@ -1,12 +1,12 @@
 import { useState } from "react";
-// import { Formik } from "formik";
-// import { FormValues } from "../../types/types";
 import { Link, useNavigate } from "react-router-dom";
 import { app, database } from "../../firebase/firebaseConfig";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import Loader from "../../components/loader/Loader";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -76,6 +76,33 @@ export default function SignUp() {
       }
     } catch (err: any) {
       console.error("Registration error:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+    const provider = new GoogleAuthProvider();
+    try {
+      setLoading(true);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const docRef = await addDoc(collectionRef, {
+        uid: user.uid,
+        userName: user.displayName,
+        fullName: user.displayName,
+        email: user.email,
+        favoriteGifs: [],
+        avatar: user.photoURL,
+      });
+      const docId = docRef.id;
+      await updateDoc(doc(collectionRef, docId), { docId: docId });
+      navigate("/");
+    } catch (error) {
+      console.error("Google Sign Up Error:", error);
     } finally {
       setLoading(false);
     }
@@ -174,100 +201,10 @@ export default function SignUp() {
           </span>
         </span>
         <div className="flex-content">
-          <button className="shadow-button">
+          <button className="shadow-button" onClick={handleGoogleSignUp}>
             <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
           </button>
         </div>
-        {/* <Formik
-        initialValues={{ email: "", password: "" }}
-        validate={(values: FormValues) => {
-          const errors: Partial<FormValues> = {};
-
-          if (!values.password) {
-            errors.password = "Required";
-          } else if (values.password.length < 8) {
-            errors.password = "Password must be at least 8 characters long";
-          } else if (
-            !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}/.test(
-              values.password,
-            )
-          ) {
-            errors.password =
-              "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character";
-          }
-
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          handleRegistration();
-          setSubmitting(false);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <form className="sign-up-form" onSubmit={handleSubmit}>
-            <div className="primary-input-section">
-              <input
-                className="input-text"
-                type="email"
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-              <span className="message">
-                {errors.email && touched.email && (
-                  <p className="small-text">{errors.email}</p>
-                )}
-              </span>
-            </div>
-            <div className="primary-input-section">
-              <input
-                className="input-text"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-              <span className="message">
-                {errors.password && touched.password && (
-                  <p className="small-text">{errors.password}</p>
-                )}
-              </span>
-            </div>
-            <div className="check-strength-password">
-              <div className={`lines ${values.password ? "valid" : ""}`}>
-                <div
-                  className={`line-1 ${values.password && /[a-z]/.test(values.password) ? "red" : "gray"}`}
-                ></div>
-                <div
-                  className={`line-2 ${values.password && /[A-Z]/.test(values.password) ? "orange" : "gray"}`}
-                ></div>
-                <div
-                  className={`line-3 ${values.password && /[\d@$!%*?&]/.test(values.password) ? "green" : "gray"}`}
-                ></div>
-              </div>
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="full-width-button"
-            >
-              <span className="mid-header">Submit</span>
-            </button>
-          </form>
-        )}
-      </Formik> */}
       </div>
       {loading && (
         <div className="overlay">

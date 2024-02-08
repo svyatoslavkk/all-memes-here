@@ -1,5 +1,10 @@
 import { app } from "../../firebase/firebaseConfig";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Loader from "../../components/loader/Loader";
@@ -35,6 +40,26 @@ export default function Login() {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const signInWithGoogle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log(user);
+      const accessToken = await user.getIdToken();
+      sessionStorage.setItem("Token", accessToken);
+      navigate("/");
+    } catch (error) {
+      console.error("Google Sign In Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,43 +116,10 @@ export default function Login() {
           </span>
         </span>
         <div className="flex-content">
-          <button className="shadow-button">
+          <button className="shadow-button" onClick={signInWithGoogle}>
             <GoogleIcon sx={{ color: "#bb87b0" }} fontSize="large" />
           </button>
         </div>
-        {/* <Formik
-        initialValues={initialValues}
-        validate={validate}
-        onSubmit={onSubmit}
-      >
-        <Form className="login-form">
-          <div className="primary-input-section">
-            <Field
-              className="input-text"
-              type="email"
-              name="email"
-              placeholder="Email"
-            />
-            <div>
-              <ErrorMessage name="email" component="div" className="error" />
-            </div>
-          </div>
-          <div className="primary-input-section">
-            <Field
-              className="input-text"
-              type="password"
-              name="password"
-              placeholder="Password"
-            />
-            <div>
-              <ErrorMessage name="password" component="div" className="error" />
-            </div>
-          </div>
-          <button type="submit" className="full-width-button">
-            <span className="mid-header">Login</span>
-          </button>
-        </Form>
-      </Formik> */}
       </div>
       {loading && (
         <div className="overlay">

@@ -30,7 +30,6 @@ export const UserProvider: React.FC<any> = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const collectionRef = collection(database, "Users Data");
   const postCollectionRef = collection(database, "Posts Data");
-  console.log("user", user);
 
   const getUsers = async () => {
     setLoading(true);
