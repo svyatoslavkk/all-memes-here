@@ -1,30 +1,20 @@
-# React + TypeScript + Vite
+<h1>GifHub</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h3>EN:</h3>
+GifHub is an application where users can search for GIFs, download them, add them to favorites,
+and upload their own GIFs. Additionally, users can follow other profiles and keep track of the content they post.
+<br />
+<ul>
+  <li>Optimally designed for desktop and mobile devices.</li>
+  <li>Authentication and registration functionalities are implemented using Firebase.</li>
+  <li>Users can interact with the database to upload their own GIF images.</li>
+</ul>
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<h3>RU:</h3>
+GifHub — приложение, в котором пользователи могут искать GIF-файлы, загружать их, добавлять в избранное, загружать свои собственные GIF-файлы. Возможность отслеживать публикуемый контент других пользователей.
+<br />
+<ul>
+  <li>Оптимально разработан для десктопных и мобильных устройств.</li>
+  <li>Функции аутентификации и регистрации реализованы с помощью Firebase.</li>
+  <li>Пользователи могут взаимодействовать с базой данных, чтобы загружать свои собственные изображения в формате GIF.</li>
+</ul>
